@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "name": "editor",
+  "kind": "application",
+  "origin": {
+    "repository": "https://github.com/roolrz/HypeR",
+    "commit": "8d42d047058a2b58a291803700e86487fb723f7a"
+  },
+  "sources": {
+    "Cargo.toml": "app/editor/Cargo.toml",
+    "component.mk": "app/editor/component.mk",
+    "src/lib.rs": "app/editor/src/lib.rs",
+    "src/main.rs": "app/editor/src/main.rs",
+    "src/storage.rs": "app/editor/src/storage.rs",
+    "tests/document.rs": "app/editor/tests/document.rs",
+    "tests/storage.rs": "app/editor/tests/storage.rs"
+  },
+  "SPDX-FileCopyrightText": "2026 roolrz",
+  "SPDX-License-Identifier": "Apache-2.0",
+  "mounts": {
+    "": "app/editor"
+  },
+  "packages": [
+    "hyper-editor"
+  ],
+  "tests": [
+    [
+      "make",
+      "app-test",
+      "APP_TEST_PACKAGE=hyper-editor"
+    ]
+  ]
+}
