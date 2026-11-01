@@ -4,8 +4,6 @@
 //! Basic fullscreen editor for the formal system terminal.
 
 #[cfg(target_os = "hyper")]
-extern crate hyper_clap_shared as _;
-#[cfg(target_os = "hyper")]
 extern crate hyper_text_ui_shared as hyper_text_ui;
 use clap::Parser;
 use hyper_editor::{Document, storage};
@@ -222,3 +220,6 @@ fn main() -> ExitCode {
         }
     }
 }
+
+#[cfg(target_os = "hyper")]
+extern crate hyper_clap_shared as clap;
