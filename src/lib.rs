@@ -189,7 +189,9 @@ impl Document {
         let found = self.text[start..]
             .find(query)
             .map(|n| start + n)
-            .or_else(|| self.text[..start].find(query));
+            // Wrap candidate starts, not the text: a match before `start`
+            // may extend beyond it, including the match at the cursor itself.
+            .or_else(|| self.text.find(query).filter(|at| *at < start));
         if let Some(at) = found {
             self.cursor = at;
             self.goal = None;

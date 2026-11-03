@@ -91,3 +91,35 @@ fn search_wraps() -> Result<(), &'static str> {
     assert!(!doc.find(""));
     Ok(())
 }
+
+#[test]
+fn wrapped_search_checks_whole_matches_at_and_across_cursor() -> Result<(), &'static str> {
+    for (text, query, cursor, expected) in [
+        ("abc", "abc", 0, 0),
+        ("abc tail", "abc", 1, 0),
+        ("界文 end", "界文", 0, 0),
+        ("a界文 end", "界文", 4, 1),
+        ("abc", "abc", 3, 0),
+    ] {
+        let mut doc = Document::new(text.into())?;
+        doc.cursor = cursor;
+        assert!(doc.find(query), "{text:?} at {cursor}");
+        assert_eq!(doc.cursor, expected);
+        assert!(!doc.dirty);
+        assert_eq!(doc.text(), text);
+    }
+    Ok(())
+}
+
+#[test]
+fn search_orders_overlapping_candidates_without_joining_document_ends() -> Result<(), &'static str>
+{
+    let mut doc = Document::new("ababa".into())?;
+    assert!(doc.find("aba"));
+    assert_eq!(doc.cursor, 2);
+    assert!(doc.find("aba"));
+    assert_eq!(doc.cursor, 0);
+    assert!(!doc.find("baab"));
+    assert_eq!(doc.cursor, 0);
+    Ok(())
+}
