@@ -28,6 +28,11 @@ Accepts UTF-8 without NUL, at most 4 MiB and 131,072 lines. Search wraps over co
 candidates. Saving prepares a synced recovery copy; fallback in-place replacement is not
 a power-loss transaction or concurrent-writer lock.
 
+Ctrl-F searches forward from the next character, then wraps to the earliest
+match. A match spanning the cursor remains eligible after wrapping, and a lone
+match can be found again. Searches are literal and case-sensitive; they do not
+join the document's end to its beginning.
+
 ## Build and test
 
 Use this checkout inside the [repo-managed workspace](https://github.com/HypeR-Proj/HypeR).
